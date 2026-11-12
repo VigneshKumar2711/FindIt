@@ -3,7 +3,8 @@ name: Deploy FindIt to GitHub Pages
 
 on:
   push:
-    branches: ["main"]
+    branches:
+      - main
   workflow_dispatch:
 
 permissions:
@@ -31,16 +32,13 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Build project
-        run: npm run build
+      - name: Build GitHub Pages
+        run: npm run build:github
 
-      - name: Add SPA fallback
-        run: cp dist/index.html dist/404.html
-
-      - name: Upload Pages artifact
+      - name: Upload GitHub Pages artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: dist
+          path: ./dist
 
   deploy:
     environment:
